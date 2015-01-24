@@ -8,12 +8,15 @@ using Jypeli.Widgets;
 
 public class crashfeator1 : PhysicsGame
 {
+    Image taustaKuva = LoadImage("taustakuva1");
     PhysicsObject pallo1;
     List<Label> valikonKohdat;
     bool pelikaynnissa;
     public override void Begin()
     {
 
+        
+        
         valikko();
 
         PhoneBackButton.Listen(ConfirmExit, "Lopeta peli");
@@ -89,6 +92,8 @@ public class crashfeator1 : PhysicsGame
         pelikaynnissa = true;
         ClearGameObjects();
         pelaa();
+        Level.Background.CreateStars();
+        //Level.Background.Image = taustaKuva;
         IsMouseVisible = false;
     }
 
