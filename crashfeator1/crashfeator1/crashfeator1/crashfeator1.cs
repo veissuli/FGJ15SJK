@@ -8,6 +8,11 @@ using Jypeli.Widgets;
 
 public class crashfeator1 : PhysicsGame
 {
+    static int TUHOUTUMINEN = 5;
+    static double KAMERANOPEUS = 500.0;
+    static double PALLONTEKONOPEUS = 0.1;
+    static int KAANTOVALI = 5;
+    static int KAANTOKULMA = 50;
     Listener alotuspainikekuuntelija;
     List<GameObject> Backgrounds = new List<GameObject>();
     Image taustaKuva = LoadImage("taustakuva1");
@@ -21,7 +26,7 @@ public class crashfeator1 : PhysicsGame
         SetWindowSize(800, 600);
 
 
-        
+
         valikko();
 
         PhoneBackButton.Listen(ConfirmExit, "Lopeta peli");
@@ -67,7 +72,8 @@ public class crashfeator1 : PhysicsGame
        pallo1.Color = Color.Red;
        Add(pallo1);
        pallo1.Shape = Shape.Circle;
-       
+       pallo1.IgnoresExplosions = true;
+
         generoi();
 
         piilari = new GameObject(1, 1);
@@ -80,7 +86,7 @@ public class crashfeator1 : PhysicsGame
         base.Update(gameTime);
         if (pelikaynnissa)
         {
-            GameObject currentBackground = GetObjectAt(pallo1.Position, "background");
+            GameObject currentBackground = GetObjectAt(Camera.Position, "background");
             if (currentBackground != null)
             {
                 foreach (GameObject background in Backgrounds)
@@ -90,13 +96,13 @@ public class crashfeator1 : PhysicsGame
                         continue;
                     }
 
-                    if (pallo1.Y > currentBackground.Y &&
+                    if (Camera.Y > currentBackground.Y &&
                         background.Y < currentBackground.Y)
                     {
                         background.Y = currentBackground.Y + Screen.Height;
                     }
 
-                    else if (pallo1.Y < currentBackground.Y &&
+                    else if (Camera.Y < currentBackground.Y &&
                         background.Y > currentBackground.Y)
                     {
                         background.Y = currentBackground.Y - Screen.Height;
@@ -104,13 +110,13 @@ public class crashfeator1 : PhysicsGame
 
 
 
-                    if (pallo1.X > currentBackground.X &&
+                    if (Camera.X > currentBackground.X &&
                        background.X < currentBackground.X)
                     {
                         background.X = currentBackground.X + Screen.Width;
                     }
 
-                    else if (pallo1.X < currentBackground.X &&
+                    else if (Camera.X < currentBackground.X &&
                          background.X > currentBackground.X)
                     {
                         background.X = currentBackground.X - Screen.Width;
@@ -139,8 +145,8 @@ public class crashfeator1 : PhysicsGame
         {
             pallo1.Position = Mouse.PositionOnScreen;
         }
-        
-        
+
+
     }
     void generoi()
     {
@@ -148,20 +154,20 @@ public class crashfeator1 : PhysicsGame
         Vector alkupiste = pallo1.Position;
         Angle suunta1 = RandomGen.NextAngle();
         Vector tp = alkupiste;
-        
-        for (int i = 0; i < 100; i++)
+
+        for (int i = 0; i < 50; i++)
         {
-            if (i%3==0)
+            if (i % KAANTOVALI == 0)
             {
                 Angle känsä = RandomGen.NextAngle(
-                    Angle.FromDegrees(-10), 
-                    Angle.FromDegrees(10));
+                    Angle.FromDegrees(-KAANTOKULMA),
+                    Angle.FromDegrees(KAANTOKULMA));
                 suunta1 = känsä;
             }
             Vector vp = Vector.FromLengthAndAngle(70, suunta1);
             tp = tp + vp;
             Vector newtp = new Vector(tp.X, tp.Y);
-            Timer.SingleShot(2.0 + 0.7 * i, () => luotahti(newtp, RandomGen.NextColor()));
+            Timer.SingleShot(2.0 + PALLONTEKONOPEUS * i, () => luotahti(newtp, RandomGen.NextColor()));
         }
     }
     void Startpainettu()
@@ -195,24 +201,27 @@ public class crashfeator1 : PhysicsGame
             bg.Tag = "background";
             Add(bg, -3);
             bg.Image = stars;
-          
+
 
         }
 
         //Level.Background.Image = taustaKuva;
         IsMouseVisible = false;
     }
-    void luotahti(Vector paikka,Color vari)
+    void luotahti(Vector paikka, Color vari)
     {
         PhysicsObject matta = new PhysicsObject(35, 35);
         matta.Shape = Shape.Circle;
         matta.Position = paikka;
         matta.Color = vari;
+        matta.IgnoresExplosions = true;
+
         Add(matta);
-        matta.LifetimeLeft = TimeSpan.FromSeconds(3);
+        matta.LifetimeLeft = TimeSpan.FromSeconds(TUHOUTUMINEN);
         lälälä.Add(matta);
+        AddCollisionHandler(matta, pallo1, CollisionHandler.ExplodeObject(100, true));
 
         // Pista kamera siirtymaan kohti viimeista palluraa
-        piilari.MoveTo(matta.Position, 100.0);
+        piilari.MoveTo(matta.Position, KAMERANOPEUS);
     }
 }
