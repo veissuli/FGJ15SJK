@@ -8,6 +8,8 @@ using Jypeli.Widgets;
 
 public class crashfeator1 : PhysicsGame
 {
+    Listener alotuspainikekuuntelija;
+    List<GameObject> Backgrounds = new List<GameObject>();
     Image taustaKuva = LoadImage("taustakuva1");
     PhysicsObject pallo1;
     List<Label> valikonKohdat;
@@ -17,7 +19,7 @@ public class crashfeator1 : PhysicsGame
     {
         SetWindowSize(800, 600);
 
-        
+
         
         valikko();
 
@@ -26,11 +28,11 @@ public class crashfeator1 : PhysicsGame
 
 
         // TO DO LIST!!!
-        // PELAAJA HIIRI
-        // SATUNNAINEN PALLOPOLKU
+
+
         // KERÄTTÄVÄT PALLOT = FYSIIKKAA = EI
         // RÄJÄHDYS 
-        //TAUSTA 
+
         //LIIKE TUNNISTUS
 
 
@@ -50,7 +52,8 @@ public class crashfeator1 : PhysicsGame
         Label kohta1 = new Label("Start the game");
         kohta1.Position = new Vector(0, 40);
         valikonKohdat.Add(kohta1);
-        Mouse.ListenOn(kohta1, MouseButton.Left, ButtonState.Pressed, Startpainettu, "Start the game");
+        alotuspainikekuuntelija = Mouse.ListenOn(kohta1, MouseButton.Left, ButtonState.Pressed, Startpainettu, "Start the game");
+
         foreach (Label valikonKohta in valikonKohdat)
         {
             Add(valikonKohta);
@@ -58,17 +61,61 @@ public class crashfeator1 : PhysicsGame
     }
     void pelaa()
     {
-        pallo1 = new PhysicsObject(30, 30);
-        pallo1.Color = Color.Red;
-        Add(pallo1);
-        pallo1.Shape = Shape.Circle;
+        
+       pallo1 = new PhysicsObject(30, 30);
+       pallo1.Color = Color.Red;
+       Add(pallo1);
+       pallo1.Shape = Shape.Circle;
+       Camera.Follow(pallo1);
         generoi();
         
     }
     protected override void Update(Microsoft.Xna.Framework.GameTime gameTime)
     {
         base.Update(gameTime);
-        if (!pelikaynnissa)
+        if (pelikaynnissa)
+        {
+            GameObject currentBackground = GetObjectAt(pallo1.Position, "background");
+            if (currentBackground != null)
+            {
+                foreach (GameObject background in Backgrounds)
+                {
+                    if (background == currentBackground)
+                    {
+                        continue;
+                    }
+
+                    if (pallo1.Y > currentBackground.Y &&
+                        background.Y < currentBackground.Y)
+                    {
+                        background.Y = currentBackground.Y + Screen.Height;
+                    }
+
+                    else if (pallo1.Y < currentBackground.Y &&
+                        background.Y > currentBackground.Y)
+                    {
+                        background.Y = currentBackground.Y - Screen.Height;
+                    }
+
+
+
+                    if (pallo1.X > currentBackground.X &&
+                       background.X < currentBackground.X)
+                    {
+                        background.X = currentBackground.X + Screen.Width;
+                    }
+
+                    else if (pallo1.X < currentBackground.X &&
+                         background.X > currentBackground.X)
+                    {
+                        background.X = currentBackground.X - Screen.Width;
+                    }
+
+                }
+            }
+
+        }
+        else
         {
             foreach (Label kohta in valikonKohdat)
             {
@@ -114,10 +161,39 @@ public class crashfeator1 : PhysicsGame
     }
     void Startpainettu()
     {
+        alotuspainikekuuntelija.Destroy();
         pelikaynnissa = true;
         ClearGameObjects();
         pelaa();
-        Level.Background.CreateStars();
+        GameObject background1 = new GameObject(Screen.Width, Screen.Height);
+        Backgrounds.Add(background1);
+        background1.Position = new Vector(Screen.Width / 2, Screen.Height / 2);
+
+        GameObject background2 = new GameObject(Screen.Width, Screen.Height);
+        Backgrounds.Add(background2);
+        background2.Position = new Vector(Screen.Width / 2, -Screen.Height / 2);
+
+
+        GameObject background3 = new GameObject(Screen.Width, Screen.Height);
+        Backgrounds.Add(background3);
+        background3.Position = new Vector(-Screen.Width / 2, Screen.Height / 2);
+
+
+        GameObject background4 = new GameObject(Screen.Width, Screen.Height);
+        Backgrounds.Add(background4);
+        background4.Position = new Vector(-Screen.Width / 2, -Screen.Height / 2);
+
+
+        Image stars = Level.Background.CreateStars();
+        foreach (var bg in Backgrounds)
+        {
+            bg.Tag = "background";
+            Add(bg, -3);
+            bg.Image = stars;
+          
+
+        }
+
         //Level.Background.Image = taustaKuva;
         IsMouseVisible = false;
     }
