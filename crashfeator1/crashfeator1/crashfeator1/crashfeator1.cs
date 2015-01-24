@@ -10,6 +10,17 @@ public class crashfeator1 : PhysicsGame
 {
     public override void Begin()
     {
+        
+        // TO DO LIST!!!
+        // PELAAJA HIIRI
+        // SATUNNAINEN PALLOPOLKU
+        // KERÄTTÄVÄT PALLOT = FYSIIKKAA = EI
+        // RÄJÄHDYS 
+        //TAUSTA 
+        //LIIKE TUNNISTUS
+        
+        
+        
         valikko();
 
         PhoneBackButton.Listen(ConfirmExit, "Lopeta peli");
