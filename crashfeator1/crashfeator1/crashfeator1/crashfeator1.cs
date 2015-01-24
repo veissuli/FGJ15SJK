@@ -67,7 +67,7 @@ public class crashfeator1 : PhysicsGame
        pallo1.Color = Color.Red;
        Add(pallo1);
        pallo1.Shape = Shape.Circle;
-       Camera.Follow(pallo1);
+       
         generoi();
 
         piilari = new GameObject(1, 1);
