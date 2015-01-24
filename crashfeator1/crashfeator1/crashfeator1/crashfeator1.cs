@@ -11,6 +11,7 @@ public class crashfeator1 : PhysicsGame
     Listener alotuspainikekuuntelija;
     List<GameObject> Backgrounds = new List<GameObject>();
     Image taustaKuva = LoadImage("taustakuva1");
+    GameObject piilari;
     PhysicsObject pallo1;
     List<Label> valikonKohdat;
     bool pelikaynnissa;
@@ -68,7 +69,11 @@ public class crashfeator1 : PhysicsGame
        pallo1.Shape = Shape.Circle;
        Camera.Follow(pallo1);
         generoi();
-        
+
+        piilari = new GameObject(1, 1);
+        piilari.IsVisible = false;
+        Add(piilari);
+        Camera.Follow(piilari);
     }
     protected override void Update(Microsoft.Xna.Framework.GameTime gameTime)
     {
@@ -206,6 +211,8 @@ public class crashfeator1 : PhysicsGame
         Add(matta);
         matta.LifetimeLeft = TimeSpan.FromSeconds(3);
         lälälä.Add(matta);
-        Camera.Follow(matta);
+
+        // Pista kamera siirtymaan kohti viimeista palluraa
+        piilari.MoveTo(matta.Position, 100.0);
     }
 }
