@@ -1,4 +1,8 @@
-﻿using System;
+﻿/* This work is portected by Attribution-NonCommercial-ShareAlike 3.0 Unported (CC BY-NC-SA 3.0) license.
+ * as required by the rules of the Global Game Jam 2015
+ */
+
+using System;
 using System.Collections.Generic;
 using Jypeli;
 using Jypeli.Assets;
@@ -8,7 +12,6 @@ using Jypeli.Widgets;
 
 public class crashfeator1 : PhysicsGame
 {
-
     GameObject now1;
     DoubleMeter voimaMittari;
     static int TUHOUTUMINEN = 5;
@@ -387,7 +390,7 @@ public class crashfeator1 : PhysicsGame
     void VoimaMittariTaynna()
     {
 
-        int luku = RandomGen.NextInt(1, 6);
+        int luku = RandomGen.NextInt(1, 5);
        
         int pallojatulossa = 0;
         if (luku == 1)
@@ -399,11 +402,11 @@ public class crashfeator1 : PhysicsGame
         {
             pallojatulossa = generoi2();
         }
-
-      /*  if (luku == 3)
+        if (luku == 3)
         {
-            lv();
-        */
+            pallojatulossa = generoi3();
+        }
+
         if (luku == 4)
         {
             pallojatulossa = generoi4();
@@ -412,10 +415,7 @@ public class crashfeator1 : PhysicsGame
         {
             pallojatulossa = generoi5();
         }
-        if (luku == 6)
-        {
-            pallojatulossa = generoi3();
-        }
+       
         voimaMittari.Value = 0.0;
         voimaMittari.MaxValue = pallojatulossa;
     }
