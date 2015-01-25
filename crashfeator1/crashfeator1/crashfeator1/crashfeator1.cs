@@ -143,7 +143,7 @@ public class crashfeator1 : PhysicsGame
 
         if (pallo1 != null)
         {
-            pallo1.Position = Mouse.PositionOnScreen;
+            pallo1.Position = Mouse.PositionOnWorld;
         }
 
 
@@ -223,5 +223,39 @@ public class crashfeator1 : PhysicsGame
 
         // Pista kamera siirtymaan kohti viimeista palluraa
         piilari.MoveTo(matta.Position, KAMERANOPEUS);
+    }
+    void generoi2()
+    {
+        lälälä = new List<PhysicsObject>();
+        Vector alkupiste = pallo1.Position;
+        Angle suunta1 = RandomGen.NextAngle();
+        Vector tp = alkupiste;
+
+        for (int i = 0; i < 50; i++)
+        {
+            if (i % KAANTOVALI == 0)
+            {
+                Angle känsä = RandomGen.NextAngle(
+                    Angle.FromDegrees(-KAANTOKULMA),
+                    Angle.FromDegrees(KAANTOKULMA));
+                suunta1 = känsä;
+            }
+            Vector vp = Vector.FromLengthAndAngle(43, suunta1);
+            tp = tp + vp;
+            Vector newtp = new Vector(tp.X, tp.Y);
+            Timer.SingleShot(1.6 + PALLONTEKONOPEUS * i, () => luotahti(newtp, RandomGen.NextColor()));
+        }
+    }
+    void generoi3()
+    {
+    }
+    void generoi4()
+    {
+    }
+    void generoi5()
+    {
+    }
+    void lv()
+    {
     }
 }
