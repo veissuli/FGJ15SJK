@@ -20,6 +20,9 @@ public class crashfeator1 : PhysicsGame
     GameObject piilari;
     PhysicsObject pallo1;
     List<Label> valikonKohdat;
+    Listener ppk;
+    Listener arka;
+    Listener lopputuli;
     bool pelikaynnissa;
     List<PhysicsObject> lälälä;
     Image lentokuva = LoadImage("lentokone1");
@@ -46,6 +49,21 @@ public class crashfeator1 : PhysicsGame
         kohta1.Position = new Vector(0, 40);
         valikonKohdat.Add(kohta1);
         alotuspainikekuuntelija = Mouse.ListenOn(kohta1, MouseButton.Left, ButtonState.Pressed, Startpainettu, "Start the game");
+
+        Label kohta2 = new Label("Hight scores");
+        kohta2.Position = new Vector(0, 80);
+        valikonKohdat.Add(kohta2);
+        ppk = Mouse.ListenOn(kohta2, MouseButton.Left, ButtonState.Pressed, pprnpp, "");
+
+        Label kohta3 = new Label("options");
+        kohta3.Position=new Vector(0,120);
+        valikonKohdat.Add(kohta3);
+        arka=Mouse.ListenOn(kohta3,MouseButton.Left,ButtonState.Pressed,juujuujuu,"");
+
+        Label kohta4 = new Label("Quit");
+        kohta4.Position= new Vector(0,160);
+        valikonKohdat.Add(kohta4);
+        lopputuli=Mouse.ListenOn(kohta4,MouseButton.Left,ButtonState.Pressed,Exit,"");
 
         foreach (Label valikonKohta in valikonKohdat)
         {
@@ -415,5 +433,27 @@ public class crashfeator1 : PhysicsGame
 
         Add(teksti);
 
+    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    void pprnpp()
+    {
+        
+    }
+    void juujuujuu()
+    {
     }
 }
