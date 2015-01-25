@@ -8,6 +8,8 @@ using Jypeli.Widgets;
 
 public class crashfeator1 : PhysicsGame
 {
+
+    GameObject now1;
     DoubleMeter voimaMittari;
     static int TUHOUTUMINEN = 5;
     static double KAMERANOPEUS = 500.0;
@@ -24,7 +26,7 @@ public class crashfeator1 : PhysicsGame
     Listener arka;
     Listener lopputuli;
     bool pelikaynnissa;
-    List<PhysicsObject> lälälä;
+    List<PhysicsObject> tahtilista;
     Image lentokuva = LoadImage("lentokone1");
     Image lentokuva2 = LoadImage("lentokone2");
     public override void Begin()
@@ -162,6 +164,7 @@ public class crashfeator1 : PhysicsGame
         pelaa();
         voimamittari();
         teksti();
+        //teksti2();
         Image seuraavaks = LoadImage("nimetön");
         GameObject background1 = new GameObject(Screen.Width, Screen.Height);
         Backgrounds.Add(background1);
@@ -204,7 +207,7 @@ public class crashfeator1 : PhysicsGame
         Add(matta);
         matta.LifetimeLeft = TimeSpan.FromSeconds(TUHOUTUMINEN);
         matta.Destroying += () => voimaMittari.Value += 1;
-        lälälä.Add(matta);
+        tahtilista.Add(matta);
         AddCollisionHandler(matta, pallo1, mittaritayttyy);
 
 
@@ -212,7 +215,7 @@ public class crashfeator1 : PhysicsGame
     }
     int generoi1()
     {
-        lälälä = new List<PhysicsObject>();
+        tahtilista = new List<PhysicsObject>();
         Vector alkupiste = pallo1.Position;
         Angle suunta1 = RandomGen.NextAngle();
         Vector tp = alkupiste;
@@ -235,7 +238,7 @@ public class crashfeator1 : PhysicsGame
     }
     int generoi2()
     {
-        lälälä = new List<PhysicsObject>();
+        tahtilista = new List<PhysicsObject>();
         Vector alkupiste = pallo1.Position;
         Angle suunta1 = RandomGen.NextAngle();
         Vector tp = alkupiste;
@@ -258,7 +261,7 @@ public class crashfeator1 : PhysicsGame
     }
     int generoi3()
     {
-        lälälä = new List<PhysicsObject>();
+        tahtilista = new List<PhysicsObject>();
         Vector alkupiste = pallo1.Position;
         Angle suunta1 = RandomGen.NextAngle();
         Vector tp = alkupiste;
@@ -282,7 +285,7 @@ public class crashfeator1 : PhysicsGame
     }
     int generoi4()
     {
-        lälälä = new List<PhysicsObject>();
+        tahtilista = new List<PhysicsObject>();
         Vector alkupiste = pallo1.Position;
         Angle suunta1 = RandomGen.NextAngle();
         Vector tp = alkupiste;
@@ -305,7 +308,7 @@ public class crashfeator1 : PhysicsGame
     }
     int generoi5()
     {
-        lälälä = new List<PhysicsObject>();
+        tahtilista = new List<PhysicsObject>();
         Vector alkupiste = pallo1.Position;
         Angle suunta1 = RandomGen.NextAngle();
         Vector tp = alkupiste;
@@ -326,7 +329,7 @@ public class crashfeator1 : PhysicsGame
         }
         return 80;
     }
-    void lv()
+ /*   void lv()
     {
         Surfaces aweryq = Level.CreateBorders();
         for (int i = 0; i < 30; i++)
@@ -337,10 +340,10 @@ public class crashfeator1 : PhysicsGame
         Timer.SingleShot(32, delegate { puhdista(aweryq); });
     }
 
-    void luolentsikka(Vector paikka)
+  /*  void luolentsikka(Vector paikka)
     {
         PhysicsObject lentsikka = new PhysicsObject(50, 50);
-        lentsikka.Position = paikka;
+        //lentsikka.Position = paikka;
         Add(lentsikka);
 
         lentsikka.Image = lentokuva;
@@ -360,7 +363,7 @@ public class crashfeator1 : PhysicsGame
         areusure.Top.Destroy();
         areusure.Bottom.Destroy();
     }
-
+    */
     void voimamittari()
     {
         voimaMittari = new DoubleMeter(0);
@@ -368,14 +371,15 @@ public class crashfeator1 : PhysicsGame
         ProgressBar voimaPalkki = new ProgressBar(150, 10);
         voimaPalkki.X = Screen.Left + 150;
         voimaPalkki.Y = Screen.Top - 70;
+        
+        
         voimaMittari.Value = 0;
         voimaPalkki.BorderColor = Color.Aqua;
         voimaPalkki.BindTo(voimaMittari);
-        voimaPalkki.Image = LoadImage("palkki tyhj");
-        voimaPalkki.BarImage = LoadImage("palkki sini");
+        //voimaPalkki.Image = LoadImage("palkki tyhj");
+        //voimaPalkki.BarImage = LoadImage("palkki sini");
 
         Add(voimaPalkki);
-
 
         voimaMittari.UpperLimit += VoimaMittariTaynna;
     }
@@ -384,6 +388,7 @@ public class crashfeator1 : PhysicsGame
     {
 
         int luku = RandomGen.NextInt(1, 6);
+       
         int pallojatulossa = 0;
         if (luku == 1)
         {
@@ -395,10 +400,10 @@ public class crashfeator1 : PhysicsGame
             pallojatulossa = generoi2();
         }
 
-        if (luku == 3)
+      /*  if (luku == 3)
         {
-            pallojatulossa = generoi3();
-        }
+            lv();
+        */
         if (luku == 4)
         {
             pallojatulossa = generoi4();
@@ -409,7 +414,7 @@ public class crashfeator1 : PhysicsGame
         }
         if (luku == 6)
         {
-            lv();
+            pallojatulossa = generoi3();
         }
         voimaMittari.Value = 0.0;
         voimaMittari.MaxValue = pallojatulossa;
@@ -425,15 +430,30 @@ public class crashfeator1 : PhysicsGame
     }
     void teksti()
     {
-        Label teksti = new Label("What do we do next?");
-        teksti.X = Screen.Right - 560;
+        Label teksti = new Label("What do we do Now?");
+        teksti.X = Screen.Left + 150;
         teksti.Y = Screen.Top - 50;
         teksti.TextColor = Color.Green;
         teksti.Font = Font.DefaultLarge;
 
         Add(teksti);
-
     }
+    //void teksti2()
+    //{
+        //Label teksti2 = new Label("now");
+        //teksti2.X = Screen.Left + 290;
+        //teksti2.Y = Screen.Top - 70;
+        //teksti2.TextColor = Color.Green;
+        //teksti2.Font = Font.DefaultLarge;
+
+        //Add(teksti2);
+    //}
+    //void now1()
+    
+    
+    
+
+    
 
 
 
