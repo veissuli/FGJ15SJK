@@ -8,6 +8,8 @@ using Jypeli.Widgets;
 
 public class crashfeator1 : PhysicsGame
 {
+    
+    DoubleMeter voimaMittari;
     static int TUHOUTUMINEN = 5;
     static double KAMERANOPEUS = 500.0;
     static double PALLONTEKONOPEUS = 0.1;
@@ -24,21 +26,16 @@ public class crashfeator1 : PhysicsGame
     public override void Begin()
     {
         SetWindowSize(800, 600);
-
+        
 
 
         valikko();
-
+        
         PhoneBackButton.Listen(ConfirmExit, "Lopeta peli");
         Keyboard.Listen(Key.Escape, ButtonState.Pressed, ConfirmExit, "Lopeta peli");
 
 
-        // TO DO LIST!!!
-
-
-        // KERÄTTÄVÄT PALLOT = FYSIIKKAA = EI
-        // RÄJÄHDYS 
-
+       
         //LIIKE TUNNISTUS
 
 
@@ -54,6 +51,7 @@ public class crashfeator1 : PhysicsGame
         ClearAll();
         IsMouseVisible = true;
         valikonKohdat = new List<Label>();
+        
 
         Label kohta1 = new Label("Start the game");
         kohta1.Position = new Vector(0, 40);
@@ -176,6 +174,7 @@ public class crashfeator1 : PhysicsGame
         pelikaynnissa = true;
         ClearGameObjects();
         pelaa();
+        voimamittari();
         GameObject background1 = new GameObject(Screen.Width, Screen.Height);
         Backgrounds.Add(background1);
         background1.Position = new Vector(Screen.Width / 2, Screen.Height / 2);
@@ -219,9 +218,9 @@ public class crashfeator1 : PhysicsGame
         Add(matta);
         matta.LifetimeLeft = TimeSpan.FromSeconds(TUHOUTUMINEN);
         lälälä.Add(matta);
-        AddCollisionHandler(matta, pallo1, CollisionHandler.ExplodeObject(100, true));
-
-        // Pista kamera siirtymaan kohti viimeista palluraa
+        AddCollisionHandler(matta, pallo1, mittaritayttyy);
+        
+       
         piilari.MoveTo(matta.Position, KAMERANOPEUS);
     }
     void generoi2()
@@ -258,4 +257,44 @@ public class crashfeator1 : PhysicsGame
     void lv()
     {
     }
+
+
+
+
+
+   void voimamittari()
+    {
+     voimaMittari = new DoubleMeter(0);
+     voimaMittari.MaxValue = 50;
+     ProgressBar voimaPalkki = new ProgressBar(150, 10);
+     voimaPalkki.X = Screen.Left + 150;
+     voimaPalkki.Y = Screen.Top - 70;
+     voimaMittari.Value = 0;
+     voimaPalkki.BorderColor = Color.Aqua;
+     voimaPalkki.BindTo(voimaMittari);
+     voimaPalkki.Image = LoadImage("palkki tyhj");
+     voimaPalkki.BarImage = LoadImage("palkki sini");
+       
+       Add(voimaPalkki);
+     
+       
+     //voimaMittari.UpperLimit = VoimaMittariTaynna;
+    }
+
+
+
+    void VoimaMittariTaynna()
+   {
+    
+   }
+
+    void mittaritayttyy(PhysicsObject matta, PhysicsObject pallo1)
+    {
+       Explosion rajahdys = new Explosion(100);
+       rajahdys.Position = matta.Position;
+       matta.Destroy();
+       Add(rajahdys);
+       voimaMittari.Value += 1;2
+    }
+
 }
