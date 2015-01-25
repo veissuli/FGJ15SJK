@@ -8,7 +8,7 @@ using Jypeli.Widgets;
 
 public class crashfeator1 : PhysicsGame
 {
-    
+
     
     DoubleMeter voimaMittari;
     static int TUHOUTUMINEN = 5;
@@ -177,6 +177,7 @@ public class crashfeator1 : PhysicsGame
         pelaa();
         voimamittari();
         teksti();
+        Image seuraavaks = LoadImage("nimetön");
         GameObject background1 = new GameObject(Screen.Width, Screen.Height);
         Backgrounds.Add(background1);
         background1.Position = new Vector(Screen.Width / 2, Screen.Height / 2);
