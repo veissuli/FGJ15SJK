@@ -217,6 +217,7 @@ public class crashfeator1 : PhysicsGame
 
         Add(matta);
         matta.LifetimeLeft = TimeSpan.FromSeconds(TUHOUTUMINEN);
+        matta.Destroying += () => voimaMittari.Value += 1;
         lälälä.Add(matta);
         AddCollisionHandler(matta, pallo1, mittaritayttyy);
         
@@ -322,8 +323,7 @@ public class crashfeator1 : PhysicsGame
        rajahdys.Position = matta.Position;
        matta.Destroy();
        Add(rajahdys);
-       voimaMittari.Value += 2;
-       
+
     }
 
 }
