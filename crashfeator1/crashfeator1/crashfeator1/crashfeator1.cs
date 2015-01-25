@@ -278,15 +278,43 @@ public class crashfeator1 : PhysicsGame
        Add(voimaPalkki);
      
        
-     //voimaMittari.UpperLimit = VoimaMittariTaynna;
+     voimaMittari.UpperLimit += VoimaMittariTaynna;
     }
 
 
 
     void VoimaMittariTaynna()
    {
-    
-   }
+       MessageDisplay.Add("What do We do now?");
+       int luku = RandomGen.NextInt(1, 6);
+       if (luku == 1)
+       {
+           generoi();
+       }
+      
+       if (luku == 2)
+       {
+           generoi2();
+       }
+      
+       if (luku == 3)
+       {
+           generoi3();
+       }
+       if (luku == 4)
+       {
+           generoi4();
+       }
+       if (luku == 5)
+       {
+           generoi5();
+       }
+       if (luku == 6)
+       {
+           lv();
+       }
+    }
+
 
     void mittaritayttyy(PhysicsObject matta, PhysicsObject pallo1)
     {
@@ -294,7 +322,8 @@ public class crashfeator1 : PhysicsGame
        rajahdys.Position = matta.Position;
        matta.Destroy();
        Add(rajahdys);
-       voimaMittari.Value += 1;2
+       voimaMittari.Value += 2;
+       
     }
 
 }
