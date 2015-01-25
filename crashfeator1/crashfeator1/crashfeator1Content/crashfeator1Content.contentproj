@@ -59,6 +59,20 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="lentokone1.png">
+      <Name>lentokone1</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="lentokone 2.png">
+      <Name>lentokone 2</Name>
+      <Importer>TextureImporter</Importer>
+      <Processor>TextureProcessor</Processor>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
     <Compile Include="explosion.png">
       <Name>explosion</Name>
       <Importer>TextureImporter</Importer>
