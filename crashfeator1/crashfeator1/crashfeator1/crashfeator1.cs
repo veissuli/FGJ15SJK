@@ -9,6 +9,7 @@ using Jypeli.Widgets;
 public class crashfeator1 : PhysicsGame
 {
     
+    
     DoubleMeter voimaMittari;
     static int TUHOUTUMINEN = 5;
     static double KAMERANOPEUS = 500.0;
@@ -175,6 +176,7 @@ public class crashfeator1 : PhysicsGame
         ClearGameObjects();
         pelaa();
         voimamittari();
+        teksti();
         GameObject background1 = new GameObject(Screen.Width, Screen.Height);
         Backgrounds.Add(background1);
         background1.Position = new Vector(Screen.Width / 2, Screen.Height / 2);
@@ -286,7 +288,7 @@ public class crashfeator1 : PhysicsGame
 
     void VoimaMittariTaynna()
    {
-       MessageDisplay.Add("What do We do now?");
+     
        int luku = RandomGen.NextInt(1, 6);
        if (luku == 1)
        {
@@ -325,5 +327,15 @@ public class crashfeator1 : PhysicsGame
        Add(rajahdys);
 
     }
+    void teksti()
+    {
+        Label teksti = new Label("What do we do next?");
+        teksti.X = Screen.Right - 560;
+        teksti.Y = Screen.Top - 50;
+        teksti.TextColor = Color.Green;
+        teksti.Font = Font.DefaultLarge;
 
+        Add(teksti);
+
+    }
 }
